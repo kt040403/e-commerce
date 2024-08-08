@@ -1,0 +1,102 @@
+ECサイト原案
+
+開発環境
+
+PHP:8.0
+Database:MySQL 8.0
+Framework:Laravel
+Webserver:Nginx
+ブラウザ:最新版Chrome,Firefox,Safari,Edge
+
+要件定義
+
+目的
+自社製品を販売するために、商品の管理、ユーザー管理といった基本的なECサイトのアプリを作成する。
+
+概要
+本システムは、ECサイトを通じてBtoCのやり取りを管理するためのwebアプリです。
+ユーザーはブラウザを通じて商品の検索、購入ができます。
+管理者はブラウザを通じて商品の登録、管理ができます。
+ユーザーをアカウント登録させることで、リスト化し、その後の営業がやりやすくなります。
+また、個人情報を扱うため、LaravelフレームワークとForifyを使用して、ユーザー認証機能を実装します。
+
+機能要件
+1 ユーザー管理
+・ユーザー登録: 名前、メールアドレス、パスワード
+・ユーザーログイン: メールアドレスとパスワードによる認証
+・ユーザープロフィール: ユーザー情報の表示と編集
+2 商品管理
+・商品一覧: 商品名、価格、画像、簡単な説明
+・商品詳細: 商品の詳細情報と画像
+・商品検索: 商品名やカテゴリーによる検索機能
+3 カート機能
+・カートへの追加: 商品をカートに追加
+・カートの表示: 現在のカート内の商品一覧、数量、合計金額
+・カートからの削除: 商品をカートから削除
+・数量変更: カート内の商品の数量変更
+4 注文機能
+・注文作成: 配送先住所、支払い方法の入力
+・注文履歴: ユーザーが過去に行った注文の一覧表示
+5 管理者機能
+・商品管理: 商品の追加、編集、削除
+・注文管理: 注文の一覧表示、注文状況の変更
+
+データベース設計
+users テーブル
+
+・id (INT, PK, AUTO_INCREMENT)
+・name (VARCHAR)
+・email (VARCHAR, UNIQUE)
+・password (VARCHAR)
+・created_at (TIMESTAMP)
+・updated_at (TIMESTAMP)
+
+products テーブル
+
+・id (INT, PK, AUTO_INCREMENT)
+・name (VARCHAR)
+・price (DECIMAL)
+・description (TEXT)
+・image (VARCHAR)
+・created_at (TIMESTAMP)
+・updated_at (TIMESTAMP)
+
+carts テーブル
+
+・id (INT, PK, AUTO_INCREMENT)
+・user_id (INT, FK)
+・product_id (INT, FK)
+・quantity (INT)
+
+orders テーブル
+
+・id (INT, PK, AUTO_INCREMENT)
+・user_id (INT, FK)
+・address (TEXT)
+・payment_method (VARCHAR)
+・total_amount (DECIMAL)
+・status (VARCHAR)
+・created_at (TIMESTAMP)
+
+order_items テーブル
+
+・id (INT, PK, AUTO_INCREMENT)
+・order_id (INT, FK)
+・product_id (INT, FK)
+・quantity (INT)
+・price (DECIMAL)
+
+セキュリティ
+・入力のバリデーション：フォーム入力に対するサーバーサイドおよびクライアントサイドのバリデーション
+・パスワードのハッシュ化: password_hash() と password_verify() を使用
+・SQLインジェクション対策: プレースホルダーを使用したプリペアドステートメント
+・CSRF対策: トークンを用いたフォーム保護
+
+ユーザーインターフェース
+・レスポンシブデザイン: モバイルとデスクトップ両方に対応
+・ナビゲーション: ホーム、商品一覧、カート、マイページ、ログイン/登録
+・フォーム: ユーザー登録、ログイン、注文フォーム
+
+その他
+・エラーメッセージ：ユーザーに分かりやすいエラーメッセージ
+・メール通知：注文確認メール
